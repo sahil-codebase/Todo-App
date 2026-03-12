@@ -111,7 +111,7 @@ const TodoList = () => {
 
           <div className="flex gap-2">
             {editingId === todo.id ? (
-              <button className="text-green-600" onClick={handleUpdate}>
+              <button className="text-green-500" onClick={handleUpdate}>
                 Save
               </button>
             ) : (
