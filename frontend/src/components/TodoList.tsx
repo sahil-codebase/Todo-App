@@ -7,10 +7,16 @@ import {
   updateTodo
 } from '../services/api'
 
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from '../store/store'
+import { setTodos } from '../features/todo/todoSlice'
+
 import type { Todo } from '../types/todo'
 
 const TodoList = () => {
-  const [todos, setTodos] = useState<Todo[]>([])
+  const dispatch = useDispatch()
+  const todos = useSelector((state: RootState) => state.todos.todos)
+
   const [task, setTask] = useState('')
 
   const [editingId, setEditingId] = useState<number | null>(null)
@@ -18,16 +24,19 @@ const TodoList = () => {
 
   const loadTodos = async () => {
     const data = await getTodos()
-    setTodos(data)
+    dispatch(setTodos(data))
   }
 
-  useEffect(() => {
-    const fetchTodos = async () => {
-      const data = await getTodos()
-      setTodos(data)
-    }
+  // useEffect(() => {
+  //   const fetchTodos = async () => {
+  //     const data = await getTodos()
+  //     setTodos(data)
+  //   }
 
-    fetchTodos()
+  //   fetchTodos()
+  // }, [])
+  useEffect(() => {
+    loadTodos()
   }, [])
 
   const handleAdd = async () => {
